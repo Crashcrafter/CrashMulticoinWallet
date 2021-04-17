@@ -1,0 +1,71 @@
+.centerbox{
+	background-color: rgba(0,0,0,0.4);
+	margin: 200px auto 0 auto;
+	width: 500px;
+}
+
+.centerbox form{
+	width: 100%;
+}
+
+.centerbox hr{
+	height: 0;
+	margin: 0 auto;
+}
+
+.centerbox h1{
+	margin-top: 20px;
+	margin-bottom: 10px;
+	font-size: 40px;
+}
+
+input[type=password], input[type=email], input[type=number], input[type=text], input[type=submit], button{
+	padding: 5px 0;
+	outline: none;
+	font-family: 'Roboto Slab', serif;
+	margin: 5px auto 10px auto;
+	width: 85%;
+	background: rgba(256,256,256,1);
+}
+
+input[type=number]{
+	text-align: center;
+}
+
+input[type=submit]{
+	width: 86%;
+	background: rgba(256,256,256,0.7);
+}
+
+label{
+	float: left;
+	margin: 7px 0 7px 35px;
+	color: #C1C1C1;
+}
+
+label a{
+	text-transform: none;
+	font-size: 12px;
+	text-decoration: underline #7c7cff;
+	color: #7c7cff;
+}
+
+input[type=checkbox]{
+	float: left;
+}
+
+button{
+	background: rgba(256,256,256,0.7);
+	height: 32px;
+	width: 40%;
+}
+
+.centeredTextBox{
+	width: 85%;
+	text-align: center;
+	margin: 10px auto;
+}
+
+.centeredTextBox p{
+	color: #dddddd;
+}

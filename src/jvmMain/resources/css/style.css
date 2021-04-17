@@ -1,0 +1,235 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+  background-color: #23272A;
+}
+
+section {
+  min-height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+header li {
+  list-style-type: none;
+}
+
+h1, h2, h3, a {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: #C1C1C1;
+  text-transform: uppercase;
+}
+
+h3 {
+  padding-top: 8%;
+  margin-bottom: 5px;
+}
+
+h4, p {
+  font-family: 'Roboto Slab', serif;
+  color: #C1C1C1;
+}
+
+hr {
+  width: 30px;
+  height: 3px;
+  background: #494949;
+  border: 0;
+}
+
+.logo, header nav ul li, header nav img {
+  transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+}
+
+header {
+  width: 100%;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #2C2F33;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.logo {
+  width: 300px;
+  height: 100%;
+  float: left;
+  margin: 0 0 0 30px;
+}
+
+.logo:hover, header nav ul li:hover {
+  opacity: 0.5;
+}
+
+.logo h1 {
+  width: 100%;
+  margin: 17px 0 0 0;
+}
+
+header nav {
+  float: right;
+  margin: 12px 30px 0 0;
+}
+
+.menu {
+  display: none;
+}
+
+header nav ul li {
+  float: left;
+  margin-left: 25px;
+  font-size: 16px;
+}
+
+footer{
+  width: 100%;
+  height: 237px;
+  background-color: #2C2F33;
+}
+
+footer * {
+	float: left;
+}
+
+.copyrightbox {
+	width: 100%;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.footercontainer {
+	width: 100%;
+}
+
+.footerbox {
+	float: left;
+	text-align: left;
+	width: 150px;
+	margin: 20px 150px;
+}
+
+.footerbox h3 {
+	padding: 0;
+	margin: 0 0 10px 0;
+	width: 100%;
+	font-size: 16px;
+}
+
+.footerbox p{
+	width: 100%;
+	margin: 10px 0;
+	font-size: 12px;
+	text-transform: none;
+}
+
+.copyrightbox p{
+	font-size: 12px;
+	color: #f0f0f0;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	float: none;
+	margin: 0;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.hidden{
+	display: none;
+}
+
+/* MEDIA QUERIES */
+
+/* TABLETS */
+
+@media screen and (max-width: 1024px) {
+	header {
+		height: auto;
+	}
+
+	.logo {
+		margin-top: 5px;
+		width: 150px;
+	}
+
+	.logo h1{
+		font-size: 15px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+  	}
+
+	header nav {
+		margin-top: 0;
+	}
+
+	header nav ul li {
+		font-size: 12px;
+	}
+}
+
+/* MOBILES */
+
+@media screen and (max-width: 600px) {
+  .logo {
+    margin-left: 30px;
+  	width: 100px;
+  }
+
+	.logo h1{
+		margin-top: 10px;
+	}
+
+  header nav {
+    margin: 0;
+    float: none;
+  }
+
+  .menu {
+    width: 40px;
+    cursor: pointer;
+    float: right;
+    margin: 10px 30px 0 0;
+    display: inline-block;
+  }
+
+  .menu:hover{
+    opacity: 0.5;
+  }
+
+  header nav ul {
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  header nav ul.open {
+    height: auto;
+  }
+
+  header nav ul li {
+    width: 100%;
+    padding: 5px 0;
+    margin: 0;
+    font-size: 11px;
+    border-top: 1px solid #dddddd;
+  }
+
+  header nav ul li:hover{
+    background-color: #eeeeee;
+  }
+}

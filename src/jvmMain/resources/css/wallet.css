@@ -1,0 +1,279 @@
+.currenciesbox{
+	width: 95%;
+	margin: 100px auto 0 auto;
+}
+
+.header{
+	width: 100%;
+	height: 50px;
+}
+
+.header p{
+	padding-top: 13px;
+	margin: 0;
+	float: none;
+}
+
+.currencybox{
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid #1c1c1c;
+}
+
+.currencybox *, .header *, .coininfocontent *, .back_button button{
+	float: left;
+}
+
+.currencybox:hover{
+	cursor: pointer;
+}
+
+.column1{
+	width: 5%;
+}
+
+.column1 img{
+	width: 50px;
+	margin: 0;
+	text-align: center;
+	float: none;
+}
+
+.column2, .column3{
+	width: 9%;
+}
+
+.column2 h3{
+	padding-top: 13px;
+	margin: 0;
+	font-size: 20px;
+	float: none;
+}
+
+.column3 p, .column4 p, .column3 p a{
+	padding-top: 13px;
+	margin: 0;
+	float: none;
+}
+
+.column4{
+	width: 13%;
+}
+
+.column1, .column2, .column3, .column4{
+	height: 100%;
+	border-right: 1px solid #1c1c1c;
+}
+
+.noborder{
+	border-right: none;
+}
+
+.column3 p.up, .marketinfobox p.up{
+	color: #63ff63;
+}
+
+.column3 p.down, .marketinfobox p.down{
+	color: #ff5050;
+}
+
+.back_button{
+	width: 100%;
+	height: 40px;
+}
+
+.back_button button{
+	height: 40px;
+	width: 150px;
+	background: transparent;
+	border: none;
+	outline: none;
+}
+
+.back_button button p{
+	font-size: 20px;
+	margin: 0;
+	float: none;
+}
+
+.back_button button:hover, .address_background button:hover{
+	cursor: pointer;
+}
+
+.back_button button:focus, .address_background button:focus{
+	outline: none;
+}
+
+.coininfocontent{
+	margin-top: 20px;
+	height: 250px;
+}
+
+.coin_logo {
+	width: 175px;
+	margin-left: 150px;
+}
+
+.coin_logo img {
+	width: 175px;
+}
+
+.address_info_box{
+	margin-left: 100px;
+	width: 800px;
+}
+
+.address_info_box h2{
+	text-align: center;
+	float: none;
+	font-size: 50px;
+	margin: 0;
+}
+
+.address_info_box h3{
+	float: none;
+	text-align: center;
+	font-size: 30px;
+	padding: 0;
+	margin: 0;
+}
+
+.address_background{
+	background: #1c1a1a;
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid #525252;
+}
+
+.address_background p{
+	margin: 0;
+	font-size: 20px;
+	width: 100%;
+	text-align: left;
+	padding: 6px;
+}
+
+.address_info p{
+	width: 100%;
+	text-align: left;
+}
+
+.refresh-button{
+	font-size: 20px;
+	border: none;
+	padding-left: 2px;
+	padding-right: 2px;
+	margin-left: 10px;
+}
+
+.address_background button, .explorer_link, .refresh-button{
+	height: 26px;
+	background: transparent;
+	outline: none;
+	color: #C1C1C1;
+	border-radius: 5px;
+	transition: all 300ms;
+	-o-transition: all 300ms;
+	-webkit-transition: all 300ms;
+	-moz-transition: all 300ms;
+}
+
+.address_background button, .explorer_link{
+	float: right;
+	border: 1px solid #535353;
+}
+
+.address_background button{
+	width: 75px;
+	margin-right: 10px;
+}
+
+.explorer_link{
+	width: 150px;
+}
+
+.explorer_link:hover, .address_background button:hover, .refresh-button:hover{
+	cursor: pointer;
+	background: #C1C1C1;
+}
+
+.explorer_link:hover, .refresh-button:hover{
+	color: #23272A;
+}
+
+.address_background button:hover{
+	color: #1c1a1a;
+}
+
+.address_qrcode {
+	margin-left: 150px;
+}
+
+.marketinfo {
+	width: 95%;
+	margin: 0 auto;
+	height: 100px;
+	border-radius: 5px;
+	background-color: #1c1a1a;
+	border: 1px solid #525252;
+}
+
+.marketinfobox {
+	width: 25%;
+	float: left;
+	height: 100%;
+}
+
+.marketinfobox * {
+	float: none;
+}
+
+.marketinfobox p {
+	margin: 0;
+	padding-top: 11px;
+	font-size: 25px;
+}
+
+@media screen and (max-width: 1625px) {
+	.column2 h3{
+		font-size: 15px;
+		padding-top: 17px;
+	}
+	.column3 p, .column4 p{
+		font-size: 13px;
+		padding-top: 16px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.currencybox{
+		height: 45px;
+	}
+	.column1 img{
+		width: 45px;
+	}
+	.column2 h3{
+		font-size: 12px;
+		padding-top: 1.31em;
+	}
+	.column3 p, .column4 p{
+		font-size: 12px;
+		padding-top: 14px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.column1 {
+		width: 15%;
+	}
+	.column2 {
+		width: 40%;
+	}
+	.column3 {
+		display: none;
+	}
+	.column4 {
+		width: 42%;
+		border-right: none;
+	}
+}

@@ -1,0 +1,46 @@
+.toscontainer {
+	margin: 100px auto 0 auto;
+	text-align: left;
+	width: 90%;
+}
+
+.toscontainer h1 {
+	font-size: 40px;
+	text-align: center;
+}
+
+.toscontainer h1 p{
+	text-align: center;
+	font-size: 20px;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td {
+	color: #C1C1C1;
+	font-size: 20px;
+}
+
+tr {
+	border-bottom: 1px solid #929292;
+}
+
+
+.td1, .td2 {
+	border-right: 1px solid #929292;
+}
+
+.td1 {
+	width: 30%;
+}
+
+.td2 {
+	width: 45%;
+}
+
+.td3 {
+	width: 10%;
+	text-align: center;
+}
