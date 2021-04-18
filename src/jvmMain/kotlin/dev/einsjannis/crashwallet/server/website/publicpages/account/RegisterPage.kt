@@ -1,21 +1,22 @@
-package dev.einsjannis.crashwallet.server.website.publicpages
+package dev.einsjannis.crashwallet.server.website.publicpages.account
 
 import dev.einsjannis.crashwallet.server.*
 import dev.einsjannis.crashwallet.server.logger.accountLogger
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.wallet.registerWallets
 import dev.einsjannis.crashwallet.server.website.*
+import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter
+import dev.einsjannis.crashwallet.server.website.publicpages.defaultHeader
+import dev.einsjannis.crashwallet.server.website.publicpages.defaultHeads
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.util.pipeline.*
 import kotlinx.html.*
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
-import org.mindrot.jbcrypt.BCrypt
 import java.net.URL
 
 suspend fun PipelineContext<Unit, ApplicationCall>.registerget() = run{

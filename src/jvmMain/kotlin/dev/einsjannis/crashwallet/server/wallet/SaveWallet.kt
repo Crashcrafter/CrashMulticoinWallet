@@ -5,7 +5,6 @@ import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
 import dev.einsjannis.crashwallet.server.saveAddress
 import dev.einsjannis.crashwallet.server.wallet.address.Address
-import dev.einsjannis.crashwallet.server.wallet.address.AddressType
 import dev.einsjannis.crashwallet.server.wallet.address.genAddress
 
 fun registerWallets(userid: Int, save: Boolean){
@@ -17,7 +16,7 @@ fun registerWallets(userid: Int, save: Boolean){
 		val addresslist = mutableListOf<Address>()
 		AddressType.values().forEach {
 			try {
-				if(it.name != "TFUEL") addresslist.add(genAddress(it))
+				if(!noOwnAddress.contains(it) && !disabledCurrencies.contains(it)) addresslist.add(genAddress(it))
 			}catch (ex: Exception){
 				addresslist.add(Address("", "", it))
 			}

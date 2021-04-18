@@ -6,8 +6,6 @@ function addCurrencyboxEvents(){
 		})
 	})
 }
-
-//TODO: Remove JQuery
 function coininfoload(short) {
 	let xhttp = new XMLHttpRequest()
 	xhttp.onreadystatechange = function (){

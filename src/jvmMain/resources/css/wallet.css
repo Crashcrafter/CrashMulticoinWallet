@@ -3,6 +3,11 @@
 	margin: 100px auto 0 auto;
 }
 
+.currencytable {
+	width: 95%;
+	margin: 0 auto;
+}
+
 .header{
 	width: 100%;
 	height: 50px;
@@ -85,23 +90,6 @@
 .back_button button{
 	height: 40px;
 	width: 150px;
-	background: transparent;
-	border: none;
-	outline: none;
-}
-
-.back_button button p{
-	font-size: 20px;
-	margin: 0;
-	float: none;
-}
-
-.back_button button:hover, .address_background button:hover{
-	cursor: pointer;
-}
-
-.back_button button:focus, .address_background button:focus{
-	outline: none;
 }
 
 .coininfocontent{

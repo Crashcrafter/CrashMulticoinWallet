@@ -5,11 +5,11 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import dev.einsjannis.crashwallet.server.exceptions.AddressNotValidException
 import dev.einsjannis.crashwallet.server.exceptions.NoUserDataFoundException
 import dev.einsjannis.crashwallet.server.json.AddressSaveObject
+import dev.einsjannis.crashwallet.server.wallet.AddressType
 import dev.einsjannis.crashwallet.server.wallet.address.Address
-import dev.einsjannis.crashwallet.server.wallet.address.AddressType
+import dev.einsjannis.crashwallet.server.wallet.address.toHexString
 import io.leonard.Base58
 import java.io.File
-import java.io.IOException
 
 fun sendTransaction(type: AddressType, senderAddressUserId: Int, targetAddress: String, amount: Double): Boolean {
     return when(type){
@@ -30,11 +30,11 @@ fun sendBTCTransaction(senderAddressUserId:Int, targetAddress: String, amount: D
 			Address(obj.privateKey, obj.addrStr, AddressType.BTC)
 		)
     }
-    if(addresses.size == 0) throw IOException("")
-    //Query UTXO for each address, get closest to amount to spent
-    //Build Transaction
-    //Calc fee
-    //Finalize Transaction
+    if(addresses.size == 0) throw NoUserDataFoundException()
+    //TODO: Query UTXO for each address, get closest to amount to spent
+    //TODO: Build Transaction
+    //TODO: Calc fee
+    //TODO: Finalize Transaction
     return false
 }
 

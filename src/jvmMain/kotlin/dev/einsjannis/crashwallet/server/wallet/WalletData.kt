@@ -8,73 +8,14 @@ import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
 import dev.einsjannis.crashwallet.server.json.CoingeckoPriceInfo
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
-import dev.einsjannis.crashwallet.server.wallet.address.AddressType
 import dev.einsjannis.crashwallet.server.wallet.balance.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import dev.einsjannis.crashwallet.server.wallet.currencies.currencies
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.net.URL
 import java.sql.Connection
 import kotlin.math.round
 
-data class StaticCurrencyInfo(val name: String, val short: String, val img: String, val explorerLink: String)
-
-data class CurrencyInfo(val name: String, val short: String, val img: String, val explorerLink: String, val currentprice: Double, val daychange: Double,
-						val dayvolume: Double, val marketcap: Double)
-
 data class BalanceAndAddress(val balance: Double, val address: String)
-
-val currencies = mutableListOf<StaticCurrencyInfo>()
-val currencylist = HashMap<String, CurrencyInfo>()
-val order = mutableListOf<String>()
-
-fun updatePrices(){
-	updateStaticInfo()
-	GlobalScope.launch {
-		while(true) {
-			val finalcurrencyinfos = HashMap<String, CurrencyInfo>()
-			var queryString = ""
-			currencies.forEach {
-				queryString += it.name.toQueryName() + ","
-			}
-			queryString.dropLast(1)
-			val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=$queryString&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true").readText()
-			val readObj = getPrices(response)
-			currencies.forEach {
-				val valueobj = readObj[it.name.toQueryName()]
-				if (valueobj != null) {
-					finalcurrencyinfos[it.short] = CurrencyInfo(it.name, it.short, it.img, it.explorerLink, valueobj.usd.round(6),
-						valueobj.usd_24h_change.round(2), valueobj.usd_24h_vol.round(0), valueobj.usd_market_cap.round(0))
-				}else {
-					println(it.name.toQueryName() + " is null")
-				}
-			}
-			currencylist.clear()
-			currencylist.putAll(finalcurrencyinfos)
-			delay(10000)
-		}
-	}
-}
-
-fun updateStaticInfo(){
-	val staticCurrencyInfos = mutableListOf<StaticCurrencyInfo>()
-	order.clear()
-	transaction {
-		CurrencyTable.selectAll().forEach {
-			//TODO: Enable Theta when bug is found
-			if(it[CurrencyTable.short].toString() != "theta"){
-				order.add(it[CurrencyTable.short])
-				staticCurrencyInfos.add(StaticCurrencyInfo(it[CurrencyTable.name], it[CurrencyTable.short], it[CurrencyTable.img], it[CurrencyTable.explorerLink]))
-			}
-		}
-	}
-	currencies.clear()
-	currencies.addAll(staticCurrencyInfos)
-}
 
 fun getBalances(userid: Int) : HashMap<String, BalanceAndAddress>{
 	val result = HashMap<String, BalanceAndAddress>()
@@ -97,12 +38,6 @@ fun getBalances(userid: Int) : HashMap<String, BalanceAndAddress>{
 	}
 	con.close()
 	return result
-}
-
-fun String.toAddressTypeString() : String {
-	var string = this.toUpperCase()
-	//For Theta later
-	return string
 }
 
 fun getBalance(userid: Int, type: AddressType) : BalanceAndAddress = getBalance(getAddress(userid, type), type)
@@ -179,14 +114,6 @@ fun Double.toReadableString() : String {
 		4 -> suffix = "T"
 	}
 	return "$value$suffix"
-}
-
-fun String.toQueryName() : String {
-	var result = this.toLowerCase().replace(' ', '-')
-	if(result.contains("smart-chain")){
-		result = "binancecoin"
-	}
-	return result
 }
 
 fun getPrices(jsonResponse: String): CoingeckoPriceInfo {

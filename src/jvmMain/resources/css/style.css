@@ -30,7 +30,7 @@ h3 {
   margin-bottom: 5px;
 }
 
-h4, p {
+h4, p, button {
   font-family: 'Roboto Slab', serif;
   color: #C1C1C1;
 }
@@ -149,6 +149,27 @@ input[type=number]::-webkit-inner-spin-button {
 
 .hidden{
 	display: none;
+}
+
+button {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.back_button button:focus {
+    outline: none;
+}
+
+button p{
+    font-size: 20px;
+    margin: 0;
+    float: none;
 }
 
 /* MEDIA QUERIES */

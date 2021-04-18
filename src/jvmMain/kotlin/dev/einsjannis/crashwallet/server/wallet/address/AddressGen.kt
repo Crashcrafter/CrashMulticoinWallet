@@ -2,13 +2,12 @@ package dev.einsjannis.crashwallet.server.wallet.address
 
 import dev.einsjannis.crashwallet.server.DBHost
 import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
+import dev.einsjannis.crashwallet.server.wallet.AddressType
 import org.bouncycastle.crypto.digests.Blake2bDigest
 import java.net.URL
 import java.util.*
 
 data class Address(val privateKey: String, val address: String, val type: AddressType)
-
-enum class AddressType{ BTC, ETH, BNB, TRX, LTC, BCH, ZEC, DASH, DOGE, DGB, NANO, RDD, THETA, TFUEL}
 
 fun genAddress(type: AddressType): Address {
 	try {

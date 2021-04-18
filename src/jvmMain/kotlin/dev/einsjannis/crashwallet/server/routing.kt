@@ -1,10 +1,10 @@
 package dev.einsjannis.crashwallet.server
 
-import dev.einsjannis.crashwallet.server.website.admin.adminDB
-import dev.einsjannis.crashwallet.server.website.admin.adminHome
-import dev.einsjannis.crashwallet.server.website.admin.adminUsers
-import dev.einsjannis.crashwallet.server.website.admin.adminWallet
+import dev.einsjannis.crashwallet.server.website.admin.*
 import dev.einsjannis.crashwallet.server.website.publicpages.*
+import dev.einsjannis.crashwallet.server.website.publicpages.account.*
+import dev.einsjannis.crashwallet.server.website.publicpages.wallet.coinInfo
+import dev.einsjannis.crashwallet.server.website.publicpages.wallet.wallet
 import io.ktor.application.*
 import io.ktor.http.content.*
 import io.ktor.response.*
@@ -74,6 +74,7 @@ fun Route.changePasswordRoute() = route("changepw") {
 fun Route.adminRoute() = route("admin") {
 	get { adminHome() }
 	get("users") { adminUsers() }
-	get("db") { adminDB() }
+	get("currencies") { adminCurrencies() }
+	post("currencies") {adminCurrenciesPost()}
 	get("wallet") { adminWallet() }
 }

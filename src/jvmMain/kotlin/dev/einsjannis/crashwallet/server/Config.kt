@@ -4,7 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import dev.einsjannis.crashwallet.server.json.ConfigObj
 import dev.einsjannis.crashwallet.server.logger.*
-import dev.einsjannis.crashwallet.server.wallet.updatePrices
+import dev.einsjannis.crashwallet.server.wallet.currencies.updatePrices
+import dev.einsjannis.crashwallet.server.wallet.initAddressType
 import dev.einsjannis.crashwallet.server.website.setMailConfig
 import java.io.File
 
@@ -12,7 +13,6 @@ var DCLink = ""
 var TwitterLink = "/"
 var etherscanioApiKey = ""
 var bscscanApiKey = ""
-val disabledAssets = mutableListOf("theta", "tfuel")
 
 fun setupServer(){
 	loadConfigs()
@@ -20,6 +20,7 @@ fun setupServer(){
 	initDatabase()
 	updatePrices()
 	initPaths()
+	initAddressType()
 	mainLogger.startlogfile()
 	accountLogger.startlogfile()
 	mainLogger.log("Loaded DB and prices!")

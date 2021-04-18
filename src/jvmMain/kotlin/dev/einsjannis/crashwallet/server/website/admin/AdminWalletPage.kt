@@ -3,6 +3,7 @@ package dev.einsjannis.crashwallet.server.website.admin
 import dev.einsjannis.crashwallet.server.DefaultUserData
 import dev.einsjannis.crashwallet.server.website.adminOnly
 import dev.einsjannis.crashwallet.server.website.getDefaultUserData
+import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultHeads
 import dev.einsjannis.crashwallet.server.website.user
 import io.ktor.application.*
@@ -18,7 +19,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.adminWallet() = run{
 	call.respondHtml {
 		head {
 			defaultHeads()
-			link(rel = "stylesheet", href = "/css/home.css")
+			link(rel = "stylesheet", href = "/assets/wallet.css")
 			title("Admin Wallet - Crash Wallet")
 		}
 		body {
@@ -31,7 +32,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.adminWallet() = run{
 				//TODO: See stats about transactions for each currency
 			}
 
-			defaultAdminFooter()
+			defaultFooter()
 		}
 	}
 }

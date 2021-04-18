@@ -24,14 +24,14 @@ fun Application.module() {
 			it1.printStackTrace()
 		}
 		exception<UnauthorizedException> {
-			call.respondRedirect("/login")
+			call.respond(HttpStatusCode.NotFound)
 		}
 		exception<Exception> { it1 ->
 			errorLogger.log(it1)
 			it1.printStackTrace()
 		}
 		status(HttpStatusCode.NotFound){
-			call.respondRedirect("/?error=notfound")
+			call.respond(HttpStatusCode.NotFound)
 		}
 	}
 	routing {

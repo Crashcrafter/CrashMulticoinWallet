@@ -5,8 +5,10 @@ import dev.einsjannis.crashwallet.server.json.AddressSaveObject
 import dev.einsjannis.crashwallet.server.json.TransactionSaveObject
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
+import dev.einsjannis.crashwallet.server.wallet.AddressType
 import dev.einsjannis.crashwallet.server.wallet.address.Address
-import dev.einsjannis.crashwallet.server.wallet.currencies
+import dev.einsjannis.crashwallet.server.wallet.currencies.currencies
+import dev.einsjannis.crashwallet.server.wallet.noOwnAddress
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
@@ -17,9 +19,7 @@ import java.util.*
 fun initPaths(){
 	createDirIfNotExists("logs/")
 	createDirIfNotExists("logs/main/")
-	createFileIfNotExists("logs/main/current.log")
 	createDirIfNotExists("logs/account/")
-	createFileIfNotExists("logs/account/current.log")
 	createDirIfNotExists("logs/errors/")
 	createDirIfNotExists("data/")
 	createDirIfNotExists("data/addresses/")
@@ -72,17 +72,25 @@ fun deleteUnneccessaryData(){
 	}
 	val con = getnewDBConnection()
 	currencies.forEach {
-		File("data/addresses/${it.short}/").listFiles()?.forEach { file ->
-			if(!ids.contains(file.name)){
-				file.delete()
-				count++
-			}else{
-				val queryString = "SELECT ${it.short} FROM wallets WHERE id=${file.name}"
-				val statement = con.prepareStatement(queryString)
-				statement.execute()
-				val resultset = statement.resultSet
-				if(resultset.next()){
-					val mainAddress = resultset.getString(it.short)
+		if(!noOwnAddress.contains(AddressType.valueOf(it.short.toUpperCase()))){
+			File("data/addresses/${it.short}/").listFiles()?.forEach { file ->
+				if(!ids.contains(file.name)){
+					file.delete()
+					count++
+				}else{
+					val queryString = "SELECT ${it.short} FROM wallets WHERE id=${file.name}"
+					val statement = con.prepareStatement(queryString)
+					statement.execute()
+					val resultset = statement.resultSet
+					if(resultset.next()){
+						val mainAddress = resultset.getString(it.short)
+						file.listFiles()?.forEach { datafile ->
+							if(datafile.name.removeSuffix(".json") != mainAddress){
+								datafile.delete()
+								//TODO: Disable when transactions working, Balance checks for each address
+							}
+						}
+					}
 				}
 			}
 		}

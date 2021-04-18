@@ -1,0 +1,77 @@
+.contentcontainer{
+    width: 95%;
+    margin: 100px auto 0 auto;
+}
+
+.contentcontainer h1 {
+    width: 100%;
+}
+
+.content {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.currencybox{
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #1c1c1c;
+}
+
+.header{
+    width: 100%;
+    height: 50px;
+}
+
+.header p{
+    padding-top: 13px;
+    margin: 0;
+    float: none;
+}
+
+.header *, .currencybox * {
+    float: left;
+}
+
+.column2 p, .column3 p, .column4 p, .column5 p, .column3 button{
+    padding-top: 13px;
+    margin: 0;
+    float: none;
+}
+
+.column5 {
+    width: 35%;
+}
+
+.column4 {
+    width: 22%;
+}
+
+.column3 {
+    width: 15%;
+}
+
+.column2 {
+    width: 5%;
+}
+
+.column2, .column3, .column4, .column5{
+    height: 100%;
+    border-right: 1px solid #1c1c1c;
+}
+
+.noborder{
+    border-right: none;
+}
+
+.column3 button {
+    margin-left: 20px;
+}
+
+.newajaxcontent, .newcurrencyAjax {
+    width: 100%;
+}
+
+.newcurrencyAjax * {
+    float: left;
+}
