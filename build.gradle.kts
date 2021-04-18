@@ -28,7 +28,7 @@ dependencies {
 	implementation("org.bouncycastle:bcprov-jdk15to18:1.68")
 	implementation("org.bouncycastle:bcpkix-jdk15to18:1.68")
 	implementation("io.leonard:base58:0.0.2")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
 	implementation("com.github.kenglxn.QRGen:javase:2.6.0")
     implementation(kotlin("stdlib-jdk8"))
 }
@@ -82,8 +82,8 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation("org.jetbrains:kotlin-react:16.13.1-pre.113-kotlin-1.4.30")
-                implementation("org.jetbrains:kotlin-react-dom:16.13.1-pre.113-kotlin-1.4.30")
+                implementation("org.jetbrains:kotlin-react:17.0.1-pre.146-kotlin-1.4.30")
+                implementation("org.jetbrains:kotlin-react-dom:17.0.1-pre.146-kotlin-1.4.30")
             }
         }
         val jsTest by getting {
