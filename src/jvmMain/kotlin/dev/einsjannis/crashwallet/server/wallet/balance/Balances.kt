@@ -1,4 +1,4 @@
-package dev.einsjannis.crashwallet.server.wallet
+package dev.einsjannis.crashwallet.server.wallet.balance
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue

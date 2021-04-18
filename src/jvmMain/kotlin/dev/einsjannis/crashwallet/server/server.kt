@@ -1,9 +1,7 @@
 package dev.einsjannis.crashwallet.server
 
 import dev.einsjannis.crashwallet.server.exceptions.UnauthorizedException
-import dev.einsjannis.crashwallet.server.json.TronscanKey
 import dev.einsjannis.crashwallet.server.logger.*
-import dev.einsjannis.crashwallet.server.wallet.*
 import dev.einsjannis.crashwallet.server.website.*
 import io.ktor.application.*
 import io.ktor.features.*
@@ -13,14 +11,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Application.module() {
-	loadConfigs()
-	initStatistics()
-	initDatabase()
-	updatePrices()
-	initPaths()
-	mainLogger.startlogfile()
-	accountLogger.startlogfile()
-	mainLogger.log("Loaded DB and prices!")
+	setupServer()
 	install(Sessions){
 		cookie<UserInfo>("login"){
 			cookie.maxAgeInSeconds = 86400

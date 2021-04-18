@@ -1,6 +1,7 @@
 package dev.einsjannis.crashwallet.server.website.publicpages
 
 import dev.einsjannis.crashwallet.server.wallet.*
+import dev.einsjannis.crashwallet.server.wallet.address.AddressType
 import dev.einsjannis.crashwallet.server.website.genQRCode
 import dev.einsjannis.crashwallet.server.website.user
 import io.ktor.application.*

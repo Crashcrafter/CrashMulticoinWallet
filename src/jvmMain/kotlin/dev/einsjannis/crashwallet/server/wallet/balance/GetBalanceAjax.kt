@@ -1,8 +1,9 @@
-package dev.einsjannis.crashwallet.server.wallet
+package dev.einsjannis.crashwallet.server.wallet.balance
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dev.einsjannis.crashwallet.server.json.AjaxObj
 import dev.einsjannis.crashwallet.server.json.AjaxWalletResponse
+import dev.einsjannis.crashwallet.server.wallet.*
 import dev.einsjannis.crashwallet.server.website.user
 import io.ktor.application.*
 import io.ktor.response.*

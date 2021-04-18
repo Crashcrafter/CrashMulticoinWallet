@@ -1,4 +1,4 @@
-package dev.einsjannis.crashwallet.server.wallet
+package dev.einsjannis.crashwallet.server.wallet.address
 
 import io.leonard.Base58
 import org.bouncycastle.jcajce.provider.digest.Keccak

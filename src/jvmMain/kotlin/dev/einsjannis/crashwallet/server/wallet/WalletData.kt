@@ -8,6 +8,8 @@ import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
 import dev.einsjannis.crashwallet.server.json.CoingeckoPriceInfo
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
+import dev.einsjannis.crashwallet.server.wallet.address.AddressType
+import dev.einsjannis.crashwallet.server.wallet.balance.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

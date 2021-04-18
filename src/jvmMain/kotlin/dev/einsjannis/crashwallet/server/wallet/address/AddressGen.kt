@@ -1,4 +1,4 @@
-package dev.einsjannis.crashwallet.server.wallet
+package dev.einsjannis.crashwallet.server.wallet.address
 
 import dev.einsjannis.crashwallet.server.DBHost
 import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException

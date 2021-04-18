@@ -5,12 +5,11 @@ import dev.einsjannis.crashwallet.server.json.AddressSaveObject
 import dev.einsjannis.crashwallet.server.json.TransactionSaveObject
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
-import dev.einsjannis.crashwallet.server.wallet.Address
+import dev.einsjannis.crashwallet.server.wallet.address.Address
 import dev.einsjannis.crashwallet.server.wallet.currencies
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
-import java.lang.NullPointerException
 import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
@@ -71,13 +70,23 @@ fun deleteUnneccessaryData(){
 			ids += it[AccountTable.id].value.toString()
 		}
 	}
+	val con = getnewDBConnection()
 	currencies.forEach {
 		File("data/addresses/${it.short}/").listFiles()?.forEach { file ->
 			if(!ids.contains(file.name)){
 				file.delete()
 				count++
+			}else{
+				val queryString = "SELECT ${it.short} FROM wallets WHERE id=${file.name}"
+				val statement = con.prepareStatement(queryString)
+				statement.execute()
+				val resultset = statement.resultSet
+				if(resultset.next()){
+					val mainAddress = resultset.getString(it.short)
+				}
 			}
 		}
 	}
+	con.close()
 	mainLogger.log("Deleted $count files at cleanup!")
 }

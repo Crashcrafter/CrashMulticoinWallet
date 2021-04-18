@@ -4,6 +4,9 @@ import dev.einsjannis.crashwallet.server.getnewDBConnection
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
 import dev.einsjannis.crashwallet.server.saveAddress
+import dev.einsjannis.crashwallet.server.wallet.address.Address
+import dev.einsjannis.crashwallet.server.wallet.address.AddressType
+import dev.einsjannis.crashwallet.server.wallet.address.genAddress
 
 fun registerWallets(userid: Int, save: Boolean){
 	val checkqueryString = "SELECT id FROM wallets WHERE id=$userid"

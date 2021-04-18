@@ -2,6 +2,7 @@ package dev.einsjannis.crashwallet.server.website.publicpages
 
 import dev.einsjannis.crashwallet.server.*
 import dev.einsjannis.crashwallet.server.wallet.*
+import dev.einsjannis.crashwallet.server.wallet.balance.getBalResponse
 import dev.einsjannis.crashwallet.server.website.getDefaultUserData
 import dev.einsjannis.crashwallet.server.website.user
 import dev.einsjannis.crashwallet.server.website.userOnly
