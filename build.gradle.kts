@@ -9,7 +9,6 @@ group = "dev.einsjannis"
 version = "0.0.1-SNAPSHOT"
 
 repositories {
-    jcenter()
     mavenCentral()
 	maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
@@ -82,8 +81,8 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation("org.jetbrains:kotlin-react:17.0.1-pre.146-kotlin-1.4.30")
-                implementation("org.jetbrains:kotlin-react-dom:17.0.1-pre.146-kotlin-1.4.30")
+                implementation("org.jetbrains:kotlin-react:17.0.1-pre.148-kotlin-1.4.30")
+                implementation("org.jetbrains:kotlin-react-dom:17.0.1-pre.148-kotlin-1.4.30")
             }
         }
         val jsTest by getting {

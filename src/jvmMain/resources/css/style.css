@@ -172,6 +172,10 @@ button p{
     float: none;
 }
 
+input {
+    outline: none;
+}
+
 /* MEDIA QUERIES */
 
 /* TABLETS */

@@ -8,7 +8,6 @@ import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
 import dev.einsjannis.crashwallet.server.json.CoingeckoPriceInfo
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
-import dev.einsjannis.crashwallet.server.wallet.balance.*
 import dev.einsjannis.crashwallet.server.wallet.currencies.currencies
 import java.io.FileNotFoundException
 import java.io.IOException

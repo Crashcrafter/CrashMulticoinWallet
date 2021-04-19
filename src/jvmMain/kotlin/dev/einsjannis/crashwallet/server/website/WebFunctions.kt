@@ -17,6 +17,7 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.mindrot.jbcrypt.BCrypt
+import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import kotlin.random.Random

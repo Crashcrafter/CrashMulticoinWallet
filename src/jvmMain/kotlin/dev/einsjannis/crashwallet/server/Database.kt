@@ -53,4 +53,12 @@ object MailingListTable : Table("mailinglist"){
 //Add new currency:
 //INSERT INTO `currencies`(`id`, `name`, `short`, `img`, `explorer_link`) VALUES ('4', 'Tron','trx','/assets/tron.png', 'https://tronscan.org/#')
 
+object FaucetTable: Table("faucets"){
+	val name = varchar("name", 50)
+	val shortdesc = varchar("shortdesc", 300)
+	val payoutrate = varchar("payoutrate", 10)
+	val currencies = varchar("currency", 10)
+	val link = varchar("link", 200)
+}
+
 data class DefaultUserData(val name: String, val role : String, val loggedIn : Boolean)

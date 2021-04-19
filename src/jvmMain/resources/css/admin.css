@@ -68,10 +68,31 @@
     margin-left: 20px;
 }
 
-.newajaxcontent, .newcurrencyAjax {
+.newajaxcontent, .newcurrencyAjax, .inputbox {
     width: 100%;
 }
 
 .newcurrencyAjax * {
     float: left;
+}
+
+.inputbox * {
+    text-align: left;
+}
+
+.inputbox p {
+    width: 200px;
+}
+
+.inputbox input {
+    width: 200px;
+    margin-top: 15px;
+}
+
+.inputbox input.short {
+    width: 100px;
+}
+
+.inputbox input.long {
+    width: 600px;
 }

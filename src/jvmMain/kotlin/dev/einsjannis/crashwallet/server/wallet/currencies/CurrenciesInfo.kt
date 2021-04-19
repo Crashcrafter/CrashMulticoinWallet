@@ -18,8 +18,6 @@ val currencies = mutableListOf<StaticCurrencyInfo>()
 val currencylist = HashMap<String, CurrencyInfo>()
 val order = mutableListOf<String>()
 
-val disabledAssets = mutableListOf("theta", "tfuel")
-
 fun updatePrices(){
     updateStaticInfo()
     GlobalScope.launch {
@@ -27,7 +25,9 @@ fun updatePrices(){
             val finalcurrencyinfos = HashMap<String, CurrencyInfo>()
             var queryString = ""
             currencies.forEach {
-                queryString += it.name.toQueryName() + ","
+                if(!disabledCurrencies.contains(AddressType.valueOf(it.short.toUpperCase()))){
+                    queryString += it.name.toQueryName() + ","
+                }
             }
             queryString.dropLast(1)
             val response = URL("https://api.coingecko.com/api/v3/simple/price?ids=$queryString&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true").readText()

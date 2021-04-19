@@ -8,6 +8,8 @@ fun String.toQueryName() : String {
     var result = this.toLowerCase().replace(' ', '-')
     if(result.contains("smart-chain")){
         result = "binancecoin"
+    }else if(result.contains("theta")){
+        result = "theta-token"
     }
     return result
 }

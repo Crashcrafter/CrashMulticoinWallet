@@ -12,15 +12,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.createNewCurrencyPage(){
     val type = call.parameters["addnew"].toString()
     if(type != ""){
         when(type) {
-            "currency" -> {
-                call.respondHtml {
-                    body {
-                        input(type = InputType.text) {
-
-                        }
-                    }
-                }
-            }
+            "currency" -> currencyAjax()
             else -> call.respondHtml { body { p { +"Not supported type $type" } } }
         }
     }
@@ -42,13 +34,14 @@ suspend fun PipelineContext<Unit, ApplicationCall>.createNewCurrencyPage(){
                     div(classes = "content") {
                         form {
                             method = FormMethod.post
-                            action = "/admin/currencies?addNew"
+                            action = "/admin/currencies?addnew"
                             div(classes = "newajaxcontent") {
                                 select {
                                     id = "assettype"
                                     onChange = "loadnewcurrencyform()"
                                     required = true
                                     name = "assettype"
+                                    multiple = false
                                     option {
                                         value = "unselected"
                                         selected = true

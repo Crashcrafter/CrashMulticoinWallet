@@ -21,7 +21,6 @@
 
 input[type=password], input[type=email], input[type=number], input[type=text], input[type=submit], button{
 	padding: 5px 0;
-	outline: none;
 	font-family: 'Roboto Slab', serif;
 	margin: 5px auto 10px auto;
 	width: 85%;

@@ -3,20 +3,20 @@ package dev.einsjannis.crashwallet.server.website.admin
 import dev.einsjannis.crashwallet.server.CurrencyTable
 import dev.einsjannis.crashwallet.server.DefaultUserData
 import dev.einsjannis.crashwallet.server.wallet.currencies.deleteCurrency
-import dev.einsjannis.crashwallet.server.website.adminOnly
-import dev.einsjannis.crashwallet.server.website.getDefaultUserData
-import dev.einsjannis.crashwallet.server.website.isGetSet
+import dev.einsjannis.crashwallet.server.website.*
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultHeads
-import dev.einsjannis.crashwallet.server.website.user
 import io.ktor.application.*
 import io.ktor.html.*
-import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.util.pipeline.*
 import kotlinx.html.*
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.io.File
+import java.net.URL
 
 suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrencies() = run{
 	val userData : DefaultUserData = getDefaultUserData(user)
@@ -139,16 +139,33 @@ private data class CurrencyTableObject(val id: Int, val name: String, val short:
 
 suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrenciesPost(){
 	val userData : DefaultUserData = getDefaultUserData(user)
+	val postparams = call.parameters
 	adminOnly(userData)
 	if(call.isGetSet("delete")){
-		val deleteid = call.parameters["delete"].toString().toInt()
+		val deleteid = postparams["delete"].toString().toInt()
 		if(deleteCurrency(deleteid)){
 			call.respondText("success")
 		}else{
 			call.respondText("error")
 		}
 	}else if(call.isGetSet("addnew")){
-		val postparams = call.parameters
-		call.respondHtml { body { p { +"Not implemented yet" } } }
+		if(postparams["assettype"].toString() == "currency"){
+			transaction {
+				val postid = postparams["id"].toString().toInt()
+				val tokenname = postparams["tokenname"].toString()
+				if(File("src/jvmMain/resources/img/logo/$tokenname.png").exists()){
+					if(CurrencyTable.select(where = {CurrencyTable.id eq postid}).empty()){
+						CurrencyTable.insert {
+							it[id] = postid
+							it[name] = tokenname
+							it[short] = postparams["tokenshort"].toString()
+							it[img] = "/assets/${tokenname.toLowerCase().replace(" ", "")}.png"
+							it[explorerLink] = postparams["explorerlink"].toString()
+						}
+					}
+				}
+			}
+		}else println(postparams["assettype"].toString())
+		call.respondRedirect("/admin/currencies")
 	}
 }
