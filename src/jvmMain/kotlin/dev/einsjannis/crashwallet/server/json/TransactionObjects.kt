@@ -1,6 +1,6 @@
 package dev.einsjannis.crashwallet.server.json
 
-data class TransactionObj (
+data class BuildTransactionObj (
     val hash: String,
     val ver: Long,
     val vin_sz: Long,

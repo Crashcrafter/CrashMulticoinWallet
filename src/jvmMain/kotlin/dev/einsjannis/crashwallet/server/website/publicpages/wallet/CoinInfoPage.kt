@@ -46,7 +46,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.coinInfo() = run {
 							+"Your ${short.toUpperCase()} Address: "
 							button(classes = "explorer_link") {
 								onClick = "window.open('${coinobj.explorerLink}/address/${userobj.address}', '_blank')"
-								+"Open in Explorer"
+								+"Explorer"
 							}
 						}
 						div(classes = "address_background") {
