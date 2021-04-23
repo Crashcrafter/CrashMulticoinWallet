@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import dev.einsjannis.crashwallet.server.exceptions.AddressNotValidException
 import dev.einsjannis.crashwallet.server.exceptions.NoUserDataFoundException
-import dev.einsjannis.crashwallet.server.json.AddressSaveObject
+import dev.einsjannis.crashwallet.server.json.files.AddressSaveObject
 import dev.einsjannis.crashwallet.server.wallet.AddressType
 import dev.einsjannis.crashwallet.server.wallet.address.Address
 import dev.einsjannis.crashwallet.server.wallet.address.toHexString

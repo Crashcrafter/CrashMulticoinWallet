@@ -1,8 +1,8 @@
 package dev.einsjannis.crashwallet.server
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import dev.einsjannis.crashwallet.server.json.AddressSaveObject
-import dev.einsjannis.crashwallet.server.json.TransactionSaveObject
+import dev.einsjannis.crashwallet.server.json.files.AddressSaveObject
+import dev.einsjannis.crashwallet.server.json.files.TransactionSaveObject
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
 import dev.einsjannis.crashwallet.server.wallet.AddressType

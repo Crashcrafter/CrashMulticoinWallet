@@ -1,4 +1,4 @@
-package dev.einsjannis.crashwallet.server.json
+package dev.einsjannis.crashwallet.server.json.files
 
 data class ConfigObj(
 	val startedMessage: String,

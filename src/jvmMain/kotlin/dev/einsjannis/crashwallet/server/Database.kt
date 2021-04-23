@@ -57,7 +57,7 @@ object FaucetTable: Table("faucets"){
 	val name = varchar("name", 50)
 	val shortdesc = varchar("shortdesc", 300)
 	val payoutrate = varchar("payoutrate", 10)
-	val currencies = varchar("currency", 10)
+	val currency = varchar("currency", 10)
 	val link = varchar("link", 200)
 }
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.mysql.cj.exceptions.CJCommunicationsException
 import dev.einsjannis.crashwallet.server.*
-import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
 import dev.einsjannis.crashwallet.server.json.CoingeckoPriceInfo
 import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.logger.mainLogger
@@ -37,33 +36,6 @@ fun getBalances(userid: Int) : HashMap<String, BalanceAndAddress>{
 	}
 	con.close()
 	return result
-}
-
-fun getBalance(userid: Int, type: AddressType) : BalanceAndAddress = getBalance(getAddress(userid, type), type)
-
-fun getBalance(address: String, type: AddressType) : BalanceAndAddress{
-	if(address != ""){
-		val resultval: Double = when(type){
-			AddressType.BTC -> getBitcoinBalance(address)
-			AddressType.ETH -> getEthereumBalance(address)
-			AddressType.BNB -> getSmartChainBalance(address)
-			AddressType.TRX -> getTronBalance(address)
-			AddressType.LTC -> getLitecoinBalance(address)
-			AddressType.BCH -> getBitcoinCashBalance(address)
-			AddressType.ZEC -> getZcashBalance(address)
-			AddressType.DASH -> getDashBalance(address)
-			AddressType.DOGE -> getDogeBalance(address)
-			AddressType.DGB -> getDigibyteBalance(address)
-			AddressType.NANO -> getNanoBalance(address)
-			AddressType.RDD -> getReddcoinBalance(address)
-			AddressType.THETA -> getThetaBalance(address)
-			AddressType.TFUEL -> getTFuelBalance(address)
-			else -> throw UnknownAddressTypeException()
-		}
-		return BalanceAndAddress(resultval, address)
-	}else{
-		return BalanceAndAddress(0.0, "")
-	}
 }
 
 fun getAddress(userid: Int, type: AddressType) : String{

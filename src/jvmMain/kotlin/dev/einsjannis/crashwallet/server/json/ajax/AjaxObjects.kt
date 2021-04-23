@@ -1,4 +1,4 @@
-package dev.einsjannis.crashwallet.server.json
+package dev.einsjannis.crashwallet.server.json.ajax
 
 class AjaxWalletResponse(elements: Map<String, AjaxObj>) : HashMap<String, AjaxObj>(elements)
 

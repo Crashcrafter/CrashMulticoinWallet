@@ -2,10 +2,11 @@ package dev.einsjannis.crashwallet.server
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import dev.einsjannis.crashwallet.server.json.ConfigObj
+import dev.einsjannis.crashwallet.server.json.files.ConfigObj
 import dev.einsjannis.crashwallet.server.logger.*
 import dev.einsjannis.crashwallet.server.wallet.currencies.updatePrices
 import dev.einsjannis.crashwallet.server.wallet.initAddressType
+import dev.einsjannis.crashwallet.server.wallet.initFaucets
 import dev.einsjannis.crashwallet.server.website.setMailConfig
 import java.io.File
 
@@ -21,6 +22,7 @@ fun setupServer(){
 	updatePrices()
 	initPaths()
 	initAddressType()
+	initFaucets()
 	mainLogger.startlogfile()
 	accountLogger.startlogfile()
 	mainLogger.log("Loaded DB and prices!")
