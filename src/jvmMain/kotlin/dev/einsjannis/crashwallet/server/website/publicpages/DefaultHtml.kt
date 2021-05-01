@@ -17,12 +17,6 @@ fun BODY.defaultFooter() = run {
 				}
 				p{
 					a{
-						href = "/discord"
-						+"Join our Discord!"
-					}
-				}
-				p{
-					a{
 						href = "/donation"
 						+"Donation"
 					}
