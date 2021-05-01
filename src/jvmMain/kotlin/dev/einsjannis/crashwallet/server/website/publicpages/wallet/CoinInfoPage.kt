@@ -17,7 +17,6 @@ suspend fun PipelineContext<Unit, ApplicationCall>.coinInfo() = run {
 		//TODO: Send Crypto
 		//TODO: Display Transactions
 		//TODO: Link to exchanges
-		//TODO: Display Market Stats
 		body {
 			div(classes = "back_button") {
 				button {
@@ -105,6 +104,14 @@ suspend fun PipelineContext<Unit, ApplicationCall>.coinInfo() = run {
 					p {
 						+"${coinobj.marketcap.toReadableString()} USD"
 					}
+				}
+			}
+			div(classes = "transactions") {
+				h1 {
+					+"Transactions"
+				}
+				div(classes = "transactionelementcontainer") {
+					
 				}
 			}
 			input(classes = "hidden_address") {

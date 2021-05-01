@@ -1,23 +1,19 @@
 package dev.einsjannis.crashwallet.server.website
 
 import dev.einsjannis.crashwallet.server.AccountTable
-import dev.einsjannis.crashwallet.server.DefaultUserData
-import dev.einsjannis.crashwallet.server.MailingListTable
 import dev.einsjannis.crashwallet.server.exceptions.UnauthorizedException
-import dev.einsjannis.crashwallet.server.logger.accountLogger
 import dev.einsjannis.crashwallet.server.logger.log
+import dev.einsjannis.crashwallet.server.logger.mainLogger
 import io.ktor.application.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.glxn.qrgen.javase.QRCode
 import org.apache.commons.mail.DefaultAuthenticator
 import org.apache.commons.mail.SimpleEmail
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.mindrot.jbcrypt.BCrypt
-import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import kotlin.random.Random
@@ -26,6 +22,8 @@ private var EmailHost = ""
 private var EmailPort = 0
 var EmailAddress = ""
 private var EmailPassword = ""
+
+data class DefaultUserData(val name: String, val role : String, val loggedIn : Boolean)
 
 fun setMailConfig(mailhost: String, mailport: Int, mailaddress: String, mailpassword: String){
 	EmailHost = mailhost
@@ -72,12 +70,31 @@ fun extractURLs(input : String) : MutableList<String>{
 	return result
 }
 
-fun validate2fa(pin : String, secret : String) : Boolean{
-	val validate = URL("https://www.authenticatorApi.com/Validate.aspx?Pin=$pin&SecretCode=$secret").readText()
-	if(validate == "True"){
-		return true
+fun create2faQRCode(userid: Int) : String{
+	var imgurl = ""
+	transaction {
+		val secretCode = randomCode(16)
+		AccountTable.update(where = {AccountTable.id eq userid}) {
+			it[AccountTable.twoFactorSecret] = secretCode
+		}
+		AccountTable.slice(AccountTable.username).select(where = { AccountTable.id eq userid}).forEach{
+			val name = it[AccountTable.username].toString()
+			val qrcodehtml = URL("https://www.authenticatorapi.com/pair.aspx?AppName=CrashWallet&AppInfo=$name&SecretCode=$secretCode").readText()
+			imgurl = extractURLs(qrcodehtml)[1]
+		}
 	}
-	return false
+	return imgurl
+}
+
+fun validate2fa(pin: String, userid: Int) : Boolean {
+	var secret = ""
+	transaction {
+		AccountTable.select(where = {AccountTable.id eq userid}).forEach {
+			secret = it[AccountTable.twoFactorSecret].toString()
+			return@forEach
+		}
+	}
+	return URL("https://www.authenticatorApi.com/Validate.aspx?Pin=$pin&SecretCode=$secret").readText() == "True"
 }
 
 fun verificationmail(id: Int){
@@ -103,7 +120,7 @@ fun verificationmail(id: Int){
 		email.setMsg("Verification Code:\n\n$code\n\nDon't reply to this mail!")
 		email.addTo(emailaddress)
 		email.send()
-		accountLogger.log("Sent verification mail to ID $id")
+		mainLogger.log("Sent verification mail to ID $id")
 	}
 }
 
@@ -129,23 +146,26 @@ fun getDefaultUserData(userInfo: UserInfo?) : DefaultUserData {
 	return DefaultUserData(name, role, loggedin)
 }
 
-fun verifyEmailCode(userid: Int, code: String): Boolean{
+fun validateEmailCode(userid: Int, code: String): Boolean{
 	var verify = false
 	transaction {
-		var email = ""
 		AccountTable.slice(AccountTable.emailcode, AccountTable.email).select(where = { AccountTable.id eq userid}).forEach{
 			if(code == it[AccountTable.emailcode].toString()){
 				verify = true
-				email = it[AccountTable.email]
-			}
-		}
-		if(verify){
-			MailingListTable.insert {
-				it[MailingListTable.email] = email
 			}
 		}
 	}
 	return verify
+}
+
+fun validatePw(email: String, pw: String) : Int {
+	var id = -1
+	transaction {
+		AccountTable.select(where = {AccountTable.email eq email}).forEach{
+			if(BCrypt.checkpw(pw, it[AccountTable.pwhash])) id = it[AccountTable.id].value
+		}
+	}
+	return id
 }
 
 fun changePw(userid: Int, pw: String){

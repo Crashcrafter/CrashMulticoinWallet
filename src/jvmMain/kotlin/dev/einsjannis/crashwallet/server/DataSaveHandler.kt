@@ -34,7 +34,7 @@ fun initPaths(){
 fun saveAddress(address: Address, userid: Int){
 	createDirIfNotExists("data/addresses/${address.type.name.toLowerCase()}/$userid/")
 	val file = createFileIfNotExists("data/addresses/${address.type.name.toLowerCase()}/$userid/${address.address}.json")
-	val obj = AddressSaveObject(address.address, address.privateKey, getCurrentTimeStamp(), ArrayList<TransactionSaveObject>())
+	val obj = AddressSaveObject(address.address, address.privateKey, getCurrentTimeStamp(), 0.0, ArrayList<TransactionSaveObject>())
 	val mapper = jacksonObjectMapper()
 	file.writeText(mapper.writeValueAsString(obj), Charset.defaultCharset())
 }

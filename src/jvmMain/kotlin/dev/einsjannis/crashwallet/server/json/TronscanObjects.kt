@@ -1,7 +1,8 @@
 package dev.einsjannis.crashwallet.server.json
 
-data class TronscanBalanceObject (
+data class TronscanAccountObject (
 	val trc20token_balances: List<Any?>,
+	val acquiredDelegateFrozenForBandWidth: Long,
 	val tokenBalances: List<TronscanBalance>,
 	val delegateFrozenForEnergy: Long,
 	val balances: List<TronscanBalance>,
@@ -10,7 +11,7 @@ data class TronscanBalanceObject (
 	val voteTotal: Long,
 	val totalFrozen: Long,
 	val tokens: List<TronscanBalance>,
-	val delegated: TronscanDelegated,
+	val delegated: Any,
 	val totalTransactionCount: Long,
 	val representative: TronscanRepresentative,
 	val frozenForBandWidth: Long,
@@ -26,6 +27,7 @@ data class TronscanBalanceObject (
 	val delegateFrozenForBandWidth: Long,
 	val name: String,
 	val frozenForEnergy: Long,
+	val acquiredDelegateFrozenForEnergy: Long,
 	val activePermissions: List<TronscanActivePermission>
 )
 

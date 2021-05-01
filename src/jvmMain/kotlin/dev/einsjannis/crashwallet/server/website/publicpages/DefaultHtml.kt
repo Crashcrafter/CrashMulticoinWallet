@@ -113,6 +113,7 @@ fun BODY.defaultHeader(name: String, role: String, loggedin: Boolean) = header {
 			}
 			if(name == "" || !loggedin){
 				li { a(href = "/login"){ +"Login" } }
+				li { a(href = "/register"){ +"Register" } }
 			}else{
 				li { a(href = "/account"){ +name } }
 			}

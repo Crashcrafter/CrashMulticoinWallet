@@ -35,7 +35,6 @@ fun registerWallets(userid: Int, save: Boolean){
 		}
 		queryString += "$userid)"
 		val statement = con.prepareStatement(queryString)
-		println(queryString)
 		statement.execute()
 	}else mainLogger.log("ID $userid already has a wallet! (Tried to override existing wallet)")
 	con.close()

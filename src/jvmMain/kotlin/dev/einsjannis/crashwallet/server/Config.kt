@@ -24,7 +24,6 @@ fun setupServer(){
 	initAddressType()
 	initFaucets()
 	mainLogger.startlogfile()
-	accountLogger.startlogfile()
 	mainLogger.log("Loaded DB and prices!")
 }
 

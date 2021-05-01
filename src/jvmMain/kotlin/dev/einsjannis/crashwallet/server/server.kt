@@ -24,7 +24,7 @@ fun Application.module() {
 			it1.printStackTrace()
 		}
 		exception<UnauthorizedException> {
-			call.respond(HttpStatusCode.NotFound)
+			call.respondRedirect("/login")
 		}
 		exception<Exception> { it1 ->
 			errorLogger.log(it1)

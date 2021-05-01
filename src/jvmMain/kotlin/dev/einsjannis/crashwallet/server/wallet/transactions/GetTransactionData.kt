@@ -6,7 +6,7 @@ import dev.einsjannis.crashwallet.server.json.transactionobj.DigibyteTransaction
 import dev.einsjannis.crashwallet.server.wallet.AddressType
 import java.net.URL
 
-data class TransactionObj(val addressTo: String, val addressFrom: String, val amount: Double)
+data class TransactionObj(val addressFrom: String, val addressTo: String, val amount: Double)
 
 fun getTransactionData(type: AddressType, txid: String): TransactionObj {
     return when(type) {
@@ -19,5 +19,5 @@ private fun getDGBTransactionData(txid: String): TransactionObj {
     val response = URL("https://digiexplorer.info/api/tx/$txid").readText()
     println(response)
     val dgbTransactionObj = jacksonObjectMapper().readValue<DigibyteTransactionObj>(response)
-    return TransactionObj(dgbTransactionObj.vin[0].addr, "", 0.0)
+    return TransactionObj(dgbTransactionObj.vin[0].addr, dgbTransactionObj.vout[0].scriptPubKey.addresses[0], 0.0)
 }

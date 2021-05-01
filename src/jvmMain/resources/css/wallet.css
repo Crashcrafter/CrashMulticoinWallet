@@ -174,10 +174,12 @@
 .address_background button{
 	width: 75px;
 	margin-right: 10px;
+	font-size: 16px;
 }
 
 .explorer_link{
 	width: 150px;
+	font-size: 16px;
 }
 
 .explorer_link:hover, .address_background button:hover, .refresh-button:hover{

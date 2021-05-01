@@ -8,7 +8,7 @@ import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
 import dev.einsjannis.crashwallet.server.json.BCHBalanceObj
 import dev.einsjannis.crashwallet.server.json.EtherscanBalanceResponse
 import dev.einsjannis.crashwallet.server.json.ThetaResponse
-import dev.einsjannis.crashwallet.server.json.TronscanBalanceObject
+import dev.einsjannis.crashwallet.server.json.TronscanAccountObject
 import java.net.URL
 
 fun getBalance(userid: Int, type: AddressType) : BalanceAndAddress = getBalance(getAddress(userid, type), type)
@@ -63,7 +63,7 @@ private fun getSmartChainBalance(bscaddress: String): Double {
 private fun getTronBalance(tronaddress: String): Double {
 	val response = URL("https://apilist.tronscan.org/api/account?address=$tronaddress").readText()
 	val mapper = jacksonObjectMapper()
-	return mapper.readValue<TronscanBalanceObject>(response).balance.toDouble() / 100000
+	return mapper.readValue<TronscanAccountObject>(response).balance.toDouble() / 100000
 }
 //TODO: Litecoin Balance
 private fun getLitecoinBalance(ltcaddress: String): Double {

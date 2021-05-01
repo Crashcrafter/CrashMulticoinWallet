@@ -13,7 +13,7 @@ fun initFaucets(){
     transaction {
         FaucetTable.selectAll().forEach {
             val type = AddressType.valueOf(it[FaucetTable.currency].toUpperCase())
-            val faucetObj = FaucetObj(it[FaucetTable.name], type.name, it[FaucetTable.payoutrate], it[FaucetTable.link])
+            val faucetObj = FaucetObj(it[FaucetTable.name], it[FaucetTable.shortdesc], it[FaucetTable.payoutrate], it[FaucetTable.link])
             faucetlist[type]!!.add(faucetObj)
         }
     }

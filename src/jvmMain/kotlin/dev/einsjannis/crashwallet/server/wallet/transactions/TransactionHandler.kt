@@ -13,12 +13,12 @@ import java.io.File
 
 fun sendTransaction(type: AddressType, senderAddressUserId: Int, targetAddress: String, amount: Double): Boolean {
     return when(type){
-        AddressType.BTC -> sendBTCTransaction(senderAddressUserId,targetAddress, amount)
+        AddressType.DGB -> sendDGBTransaction(senderAddressUserId,targetAddress, amount)
         else -> false
     }
 }
 
-fun sendBTCTransaction(senderAddressUserId:Int, targetAddress: String, amount: Double): Boolean{
+fun sendDGBTransaction(senderAddressUserId:Int, targetAddress: String, amount: Double): Boolean{
     if(!validateTargetAddress(targetAddress)) throw AddressNotValidException()
     val targetPublicKey = getPublicKeyFromAddress(targetAddress)
     val userdir = File("/data/addresses/btc/$senderAddressUserId")
@@ -27,10 +27,16 @@ fun sendBTCTransaction(senderAddressUserId:Int, targetAddress: String, amount: D
         val filetext = it.readText()
         val obj = jacksonObjectMapper().readValue<AddressSaveObject>(filetext)
         addresses.add(
-			Address(obj.privateKey, obj.addrStr, AddressType.BTC)
+			Address(obj.privateKey, obj.addrStr, AddressType.DGB)
 		)
     }
     if(addresses.size == 0) throw NoUserDataFoundException()
+    addresses.forEach { address ->
+        val transactions = getTransactions(address.address, AddressType.DGB)
+        transactions.forEach {
+            val txobj = getTransactionData(AddressType.DGB, it.txid)
+        }
+    }
     //TODO: Query UTXO for each address, get closest to amount to spent
     //TODO: Build Transaction
     //TODO: Calc fee

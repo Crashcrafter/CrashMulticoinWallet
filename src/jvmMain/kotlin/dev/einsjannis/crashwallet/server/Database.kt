@@ -32,10 +32,10 @@ fun initDatabase() {
 
 object AccountTable : IntIdTable("accounts"){
 	val email = varchar("email", 320)
-	val pwhash = text("pwhash").nullable()
+	val pwhash = varchar("pwhash", 70).nullable()
 	val username = varchar("username", 20).nullable()
-	val twoFactorCode = varchar("2fasecret", 16).nullable()
-	val role = varchar("role", 20).default("user")
+	val twoFactorSecret = varchar("2fasecret", 16).nullable()
+	val role = varchar("role", 20).nullable()
 	val emailcode = varchar("emailcode", 6).nullable()
 }
 
@@ -47,13 +47,7 @@ object CurrencyTable : Table("currencies"){
 	val explorerLink = text("explorer_link")
 }
 
-object MailingListTable : Table("mailinglist"){
-	val email = varchar("email", 320)
-}
-//Add new currency:
-//INSERT INTO `currencies`(`id`, `name`, `short`, `img`, `explorer_link`) VALUES ('4', 'Tron','trx','/assets/tron.png', 'https://tronscan.org/#')
-
-object FaucetTable: Table("faucets"){
+object FaucetTable: IntIdTable("faucets"){
 	val name = varchar("name", 50)
 	val shortdesc = varchar("shortdesc", 300)
 	val payoutrate = varchar("payoutrate", 10)
@@ -61,4 +55,6 @@ object FaucetTable: Table("faucets"){
 	val link = varchar("link", 200)
 }
 
-data class DefaultUserData(val name: String, val role : String, val loggedIn : Boolean)
+object NewsletterTable: IntIdTable("newsletter"){
+	val email = varchar("email", 320)
+}

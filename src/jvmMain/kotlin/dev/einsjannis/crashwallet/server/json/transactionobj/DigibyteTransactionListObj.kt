@@ -2,8 +2,6 @@ package dev.einsjannis.crashwallet.server.json.transactionobj
 
 class DigibyteTransactionArray(elements: Collection<DigibyteTransactionListObj>) : ArrayList<DigibyteTransactionListObj>(elements)
 
-//data class DigibyteTransactionArray(val elements: Collection<DigibyteTransactionObj>)
-
 data class DigibyteTransactionListObj (
     val address: String,
     val txid: String,
@@ -13,6 +11,11 @@ data class DigibyteTransactionListObj (
     val amount: Any?,
     val confirmations: Long?,
     val confirmationsFromCache: Boolean
+)
+
+data class DigibyteTransactionHistoryObj (
+    val pagesTotal: Long,
+    val txs: List<DigibyteTransactionObj>
 )
 
 data class DigibyteTransactionObj (

@@ -19,8 +19,10 @@ private fun getDGBUTXO(address: String): List<UTXO> {
     val response = URL("https://digiexplorer.info/api/addr/$address/utxo").readText()
     println(response)
     val UTXOObj = jacksonObjectMapper().readValue<DGBUTXOObj>(response)
+    val utxos = mutableListOf<UTXO>()
     UTXOObj.forEach {
-        getTransactionData(AddressType.DGB, it.txid)
+        val obj = getTransactionData(AddressType.DGB, it.txid)
+        utxos.add(UTXO(it.txid, obj.amount))
     }
-    return listOf()
+    return utxos
 }

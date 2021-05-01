@@ -1,6 +1,6 @@
 package dev.einsjannis.crashwallet.server.website.admin
 
-import dev.einsjannis.crashwallet.server.DefaultUserData
+import dev.einsjannis.crashwallet.server.website.DefaultUserData
 import dev.einsjannis.crashwallet.server.website.adminOnly
 import dev.einsjannis.crashwallet.server.website.getDefaultUserData
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter

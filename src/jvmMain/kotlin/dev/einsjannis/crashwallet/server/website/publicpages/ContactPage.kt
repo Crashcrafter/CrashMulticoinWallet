@@ -1,6 +1,5 @@
 package dev.einsjannis.crashwallet.server.website.publicpages
 
-import dev.einsjannis.crashwallet.server.DefaultUserData
 import dev.einsjannis.crashwallet.server.website.*
 import io.ktor.application.*
 import io.ktor.html.*

@@ -6,7 +6,6 @@ import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.util.pipeline.*
 import kotlinx.html.*
-import java.net.URL
 
 suspend fun PipelineContext<Unit, ApplicationCall>.home() = run {
 	val userData : DefaultUserData = getDefaultUserData(user)

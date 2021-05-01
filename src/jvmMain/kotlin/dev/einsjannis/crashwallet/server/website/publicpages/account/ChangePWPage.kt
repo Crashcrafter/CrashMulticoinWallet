@@ -37,7 +37,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.changepwpost() = run{
 	val postparams = call.receiveParameters()
 	val id = user!!.id
 	if(call.isGetSet("emailverify")){
-		if(verifyEmailCode(id, postparams["code"].toString())){
+		if(validateEmailCode(id, postparams["code"].toString())){
 			call.respondRedirect("/changepw?newpw")
 		}else{
 			call.respondRedirect("/changepw?error=wrongcode")

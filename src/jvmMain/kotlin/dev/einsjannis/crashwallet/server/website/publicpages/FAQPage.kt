@@ -1,6 +1,5 @@
 package dev.einsjannis.crashwallet.server.website.publicpages
 
-import dev.einsjannis.crashwallet.server.DefaultUserData
 import dev.einsjannis.crashwallet.server.website.*
 import io.ktor.application.*
 import io.ktor.html.*
@@ -22,8 +21,6 @@ suspend fun PipelineContext<Unit, ApplicationCall>.faq() = run {
 			section {
 				hr()
 				//TODO: Display FAQ
-				//TODO: Add input for suggestion
-
 			}
 
 			defaultFooter()

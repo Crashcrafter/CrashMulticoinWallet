@@ -1,8 +1,13 @@
 package dev.einsjannis.crashwallet.server.wallet.transactions
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import dev.einsjannis.crashwallet.server.getCurrentTimeStamp
+import dev.einsjannis.crashwallet.server.json.transactionobj.DigibyteTransactionHistoryObj
 import dev.einsjannis.crashwallet.server.wallet.AddressType
+import java.net.URL
 
-data class TransactionHistoryObj(val txid: String, val send: Boolean, val otherAddress: String, val amount: Double, val confirmed: Boolean)
+data class TransactionHistoryObj(val txid: String, val send: Boolean, val otherAddress: String, val amount: Double, val timeStamp: String)
 
 fun getTransactions(address: String, type: AddressType): List<TransactionHistoryObj> {
     return when(type) {
@@ -12,5 +17,23 @@ fun getTransactions(address: String, type: AddressType): List<TransactionHistory
 }
 
 private fun getDGBTransactionHistory(address: String): List<TransactionHistoryObj> {
-    return listOf()
+    val txList = mutableListOf<TransactionHistoryObj>()
+    val response = URL("https://digiexplorer.info/api/txs/?address=$address").readText()
+    val obj = jacksonObjectMapper().readValue<DigibyteTransactionHistoryObj>(response)
+    obj.txs.forEach {
+        val senderAddress = it.vin[0].addr
+        val receiverAddress = it.vout[0].scriptPubKey.addresses[0]
+        val send = address == senderAddress
+        var otherAddress = senderAddress
+        if(send) otherAddress = receiverAddress
+        var value = 0.0
+        it.vout.forEach { vout ->
+            vout.scriptPubKey.addresses.forEach { addresses ->
+                if(addresses == address) println()
+            }
+        }
+        txList.add(TransactionHistoryObj(it.txid, send, otherAddress, 0.0, getCurrentTimeStamp()))
+    }
+    println(response)
+    return txList
 }

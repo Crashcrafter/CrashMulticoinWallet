@@ -28,7 +28,8 @@ fun getBalances(userid: Int) : HashMap<String, BalanceAndAddress>{
 			}catch (ex: FileNotFoundException){
 				mainLogger.log("$short Balance query failed (FileNotFoundException, api endpoint not found!)")
 			}catch (ex: IOException) {
-				mainLogger.log("$short Balance query failed (IOException: Http 502, Bad Gateway)")
+				ex.printStackTrace()
+				mainLogger.log("$short Balance query failed (IOException)")
 			}
 		}else{
 			result[short] = BalanceAndAddress(0.0, "")

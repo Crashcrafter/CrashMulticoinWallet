@@ -1,7 +1,6 @@
 package dev.einsjannis.crashwallet.server.website.admin
 
 import dev.einsjannis.crashwallet.server.CurrencyTable
-import dev.einsjannis.crashwallet.server.DefaultUserData
 import dev.einsjannis.crashwallet.server.wallet.currencies.deleteCurrency
 import dev.einsjannis.crashwallet.server.website.*
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter
@@ -16,7 +15,6 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
-import java.net.URL
 
 suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrencies() = run{
 	val userData : DefaultUserData = getDefaultUserData(user)

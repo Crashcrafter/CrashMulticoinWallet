@@ -1,8 +1,6 @@
 package dev.einsjannis.crashwallet.server.website.publicpages.account
 
 import dev.einsjannis.crashwallet.server.*
-import dev.einsjannis.crashwallet.server.logger.accountLogger
-import dev.einsjannis.crashwallet.server.logger.log
 import dev.einsjannis.crashwallet.server.wallet.registerWallets
 import dev.einsjannis.crashwallet.server.website.*
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter
@@ -14,20 +12,19 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.util.pipeline.*
 import kotlinx.html.*
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
-import java.net.URL
+import org.mindrot.jbcrypt.BCrypt
 
 suspend fun PipelineContext<Unit, ApplicationCall>.registerget() = run{
 	val userdata = getDefaultUserData(user)
 	if(userdata.loggedIn){
-		call.respondRedirect("/")
+		call.respondRedirect("/account")
 	}
 	val id = user?.id
-	if(id == null || call.request.queryParameters.entries().isEmpty()){
-		call.respondRedirect("/login")
-	}
 	call.respondHtml {
 		head {
 			defaultHeads()
@@ -43,101 +40,73 @@ suspend fun PipelineContext<Unit, ApplicationCall>.registerget() = run{
 				div(classes = "centerbox") {
 					hr()
 					h1 { +"Register" }
-					when {
-						call.isGetSet("2fa") -> {
-							var name = ""
-							transaction {
-								AccountTable.slice(AccountTable.username).select(where = { AccountTable.id eq id}).forEach{
-									name = it[AccountTable.username].toString()
-									return@forEach
-								}
-							}
-							val secretCode = randomCode(16)
-							val qrcodehtml = URL("https://www.authenticatorapi.com/pair.aspx?AppName=CrashWallet&AppInfo=$name&SecretCode=$secretCode").readText()
-							val imgsrcurl = extractURLs(qrcodehtml)[1]
-							img {
-								src = imgsrcurl
-							}
-							br
-							div(classes = "centeredTextBox") {
-								p {
-									+"Scan the code above with your Authenticator App (Google Authenticator is recommend). If the QR-Code does not load refresh the website."
-								}
-							}
-							form(action = "?confirm2facode", method = FormMethod.post) {
-								input(type = InputType.number, name = "2facode") {
-									placeholder = "Enter 2FA Code"
-									required = true
-								}
-								input(type = InputType.hidden, name = "secret") {
-									value = secretCode
-								}
-								input(type = InputType.submit) {
-									value = "Next"
-								}
+					if(call.isGetSet("2fa")){
+						verificationmail(id!!)
+						img {
+							src = create2faQRCode(id)
+						}
+						br
+						div(classes = "centeredTextBox") {
+							p {
+								+"Scan the code above with your Authenticator App (Google Authenticator is recommend). If the QR-Code does not load refresh the website."
 							}
 						}
-						call.isGetSet("pw") -> {
-							form(action = "?pwvalidate", method = FormMethod.post) {
-								input(type = InputType.password, name = "pw") {
-									placeholder = "Enter Password"
-									required = true
-								}
-								input(type = InputType.password, name = "cpw") {
-									placeholder = "Confirm Password"
-									required = true
-								}
-								input(type = InputType.submit) {
-									value = "Next"
-								}
+						form(action = "?2fa", method = FormMethod.post) {
+							input(type = InputType.number, name = "2facode") {
+								required = true
+								placeholder = "Enter 2FA Code"
+							}
+							input(type = InputType.number, name = "emailcode") {
+								required = true
+								placeholder = "Enter Email Code"
+							}
+							input(type = InputType.submit) {
+								value = "Confirm"
 							}
 						}
-						call.isGetSet("username") -> {
-							form(action = "?usernamecheck", method = FormMethod.post) {
-								input(type = InputType.text, name = "username") {
-									placeholder = "Enter Username"
-									required = true
-								}
-								input(type = InputType.submit) {
-									value = "Next"
-								}
+					}else {
+						form(action = "?register", method = FormMethod.post) {
+							input(type = InputType.email, name = "email") {
+								required = true
+								placeholder = "Email"
 							}
-						}
-						call.isGetSet("emailverify") -> {
-							verificationmail(id!!)
-							form(action = "?emailverify", method = FormMethod.post) {
-								input(type = InputType.text, name = "code") {
-									placeholder = "Enter Verification Code"
+							input(type = InputType.text, name = "username") {
+								required = true
+								placeholder = "Username"
+							}
+							input(type = InputType.password, name = "pw") {
+								required = true
+								placeholder = "Password"
+							}
+							input(type = InputType.password, name = "cpw") {
+								required = true
+								placeholder = "Confirm Password"
+							}
+							label {
+								input(type = InputType.checkBox, name = "tos") {
 									required = true
 								}
-								br()
-								label {
-									input(type = InputType.checkBox, name = "tos") {
-										required = true
-									}
-									+"I agree to the "
-									a(href = "/tos", target = "_blank") {+"ToS"}
-									+" and the "
-									a(href = "/privacy-policy", target = "_blank") {+"Privacy Policy"}
+								+"I agree to the "
+								a(href = "/tos", target = "_blank") {+"ToS"}
+								+" and the "
+								a(href = "/privacy-policy", target = "_blank") {+"Privacy Policy"}
+							}
+							br()
+							br()
+							label {
+								input(type = InputType.checkBox, name = "newsletter") {
+									required = false
 								}
-								br()
-								br()
-								label {
-									input(type = InputType.checkBox, name = "newsletter") {
-										required = false
-									}
-									+"I want to receive News about this website via email"
-								}
-								br()
-								input(type = InputType.submit) {
-									value = "Next"
-								}
+								+"I want to receive News about Crash Wallet via email"
+							}
+							br()
+							input(type = InputType.submit) {
+								value = "Register"
 							}
 						}
 					}
 				}
 			}
-
 			defaultFooter()
 		}
 	}
@@ -145,59 +114,41 @@ suspend fun PipelineContext<Unit, ApplicationCall>.registerget() = run{
 
 suspend fun PipelineContext<Unit, ApplicationCall>.registerpost() = run{
 	val postparams = call.receiveParameters()
-	val id = user?.id ?: 0
-	if(call.isGetSet("confirm2facode")){
-		val secret = postparams["secret"].toString()
-		val pin = postparams["2facode"]!!
-		if(validate2fa(pin, secret)){
-			transaction {
-				AccountTable.update(where = { AccountTable.id eq id}){
-					it[twoFactorCode] = secret
-				}
-			}
-			accountLogger.log("Account $id confirmed 2facode on registration")
-			accountLogger.log("Account $id registered successfully")
-			saveLogin(id, true)
-			registerWallets(id, true)
-			call.respondRedirect("/wallet")
-		}else{
-			accountLogger.log("Account $id entered wrong 2facode on registration")
-			call.respondRedirect("/register?confirm2fa&error=wrongcode")
-		}
-	}else if(call.isGetSet("pwvalidate")){
-		if(postparams["pw"].toString() == postparams["cpw"].toString()){
-			changePw(id, postparams["pw"].toString())
-			accountLogger.log("Account ${user!!.id} entered password on registration")
-			call.respondRedirect("/register?username")
-		}else{
-			accountLogger.log("Account ${user!!.id} entered not matching password on registration")
-			call.respondRedirect("/register?pw&error=pwmatch")
-		}
-	}else if(call.isGetSet("usernamecheck")){
-		var existsUsername = true
-		val username = postparams["username"]
+	val id = user?.id ?: -1
+	if(call.isGetSet("register")){
+		val email = postparams["email"].toString()
+		val username = postparams["username"].toString()
+		val pw = postparams["pw"].toString()
+		val cpw = postparams["cpw"].toString()
+		val newsletter = postparams["newsletter"].toBoolean()
+		var redirect = "/register?2fa"
 		transaction {
-			existsUsername = !AccountTable.slice(AccountTable.username).select(where = { AccountTable.username eq username}).empty()
-		}
-		if(existsUsername){
-			accountLogger.log("Account ${user!!.id} entered existing username on registration")
-			call.respondRedirect("/register?username&error=userexists")
-		}else{
-			transaction {
-				AccountTable.update(where = { AccountTable.id eq id}){
+			if(newsletter) NewsletterTable.insert { it[NewsletterTable.email] = email }
+			if(!AccountTable.select(where = {AccountTable.email eq email}).empty()) redirect = "/register?error=accountemailalreadyexists"
+			if(!AccountTable.select(where = {AccountTable.username eq username}).empty()) redirect = "/register?error=accountusernamealreadyexists"
+			if(pw != cpw) redirect = "/register?error=pwdontmatch"
+			if(redirect == "/register?2fa"){
+				val newid = AccountTable.insertAndGetId {
+					it[AccountTable.email] = email
 					it[AccountTable.username] = username
-				}
+					it[AccountTable.pwhash] = BCrypt.hashpw(pw, BCrypt.gensalt(7))
+				}.value
+				saveLogin(newid, false)
 			}
-			accountLogger.log("Account ${user!!.id} entered username on registration")
-			call.respondRedirect("/register?2fa")
 		}
-	}else if(call.isGetSet("emailverify")){
-		if(verifyEmailCode(id, postparams["code"].toString())){
-			accountLogger.log("Account ${user!!.id} verificated email on registration")
-			call.respondRedirect("/register?pw")
-		}else{
-			accountLogger.log("Account ${user!!.id} entered wrong email code on registration")
-			call.respondRedirect("/register?emailverify&error=wrongemailcode")
+		call.respondRedirect(redirect)
+	}else if(call.isGetSet("2fa")){
+		val twofactorCode = postparams["2facode"].toString()
+		val emailCode = postparams["emailcode"].toString()
+		if(!validateEmailCode(id, emailCode)) call.respondRedirect("/register?2fa&error=wrongemailcode")
+		if(!validate2fa(twofactorCode, id)) call.respondRedirect("/register?2fa&error=wrong2facode")
+		transaction {
+			AccountTable.update(where = {AccountTable.id eq id}){
+				it[AccountTable.role] = "user"
+			}
 		}
+		saveLogin(id, true)
+		registerWallets(id, true)
+		call.respondRedirect("/wallet")
 	}
 }

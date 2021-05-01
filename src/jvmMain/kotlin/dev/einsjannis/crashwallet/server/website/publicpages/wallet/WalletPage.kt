@@ -1,14 +1,9 @@
 package dev.einsjannis.crashwallet.server.website.publicpages.wallet
 
-import dev.einsjannis.crashwallet.server.*
-import dev.einsjannis.crashwallet.server.wallet.*
-import dev.einsjannis.crashwallet.server.website.getDefaultUserData
-import dev.einsjannis.crashwallet.server.website.isGetSet
+import dev.einsjannis.crashwallet.server.website.*
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultFooter
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultHeader
 import dev.einsjannis.crashwallet.server.website.publicpages.defaultHeads
-import dev.einsjannis.crashwallet.server.website.user
-import dev.einsjannis.crashwallet.server.website.userOnly
 import io.ktor.application.*
 import io.ktor.html.*
 import io.ktor.util.pipeline.*
