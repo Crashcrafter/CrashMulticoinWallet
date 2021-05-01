@@ -26,7 +26,8 @@ suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrencies() = run{
 	val currenciesObjList = mutableListOf<CurrencyTableObject>()
 	transaction {
 		CurrencyTable.selectAll().forEach {
-			currenciesObjList.add(CurrencyTableObject(it[CurrencyTable.id], it[CurrencyTable.name], it[CurrencyTable.short], it[CurrencyTable.img], it[CurrencyTable.explorerLink]))
+			currenciesObjList.add(CurrencyTableObject(it[CurrencyTable.id], it[CurrencyTable.name], it[CurrencyTable.short],
+				"/logo/${it[CurrencyTable.short]}.png", it[CurrencyTable.explorerLink]))
 		}
 	}
 	call.respondHtml {
@@ -66,11 +67,6 @@ suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrencies() = run{
 									+"Short"
 								}
 							}
-							div(classes = "column4") {
-								p {
-									+"IMG Path"
-								}
-							}
 							div(classes = "column5") {
 								p {
 									+"Explorer Link"
@@ -97,11 +93,6 @@ suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrencies() = run{
 								div(classes = "column2") {
 									p {
 										+it.short
-									}
-								}
-								div(classes = "column4") {
-									p {
-										+it.imgPath
 									}
 								}
 								div(classes = "column5") {
@@ -157,7 +148,6 @@ suspend fun PipelineContext<Unit, ApplicationCall>.adminCurrenciesPost(){
 							it[id] = postid
 							it[name] = tokenname
 							it[short] = postparams["tokenshort"].toString()
-							it[img] = "/assets/${tokenname.toLowerCase().replace(" ", "")}.png"
 							it[explorerLink] = postparams["explorerlink"].toString()
 						}
 					}

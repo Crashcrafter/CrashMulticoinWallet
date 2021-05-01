@@ -86,7 +86,7 @@ fun deleteUnneccessaryData(){
 						file.listFiles()?.forEach { datafile ->
 							if(datafile.name.removeSuffix(".json") != mainAddress){
 								datafile.delete()
-								//TODO: Disable when transactions working, Balance checks for each address
+								//Disable when transactions working, Balance checks for each address
 							}
 						}
 					}

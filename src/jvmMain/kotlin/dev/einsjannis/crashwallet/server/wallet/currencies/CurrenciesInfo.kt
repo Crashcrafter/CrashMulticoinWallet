@@ -54,8 +54,9 @@ fun updateStaticInfo(){
     transaction {
         CurrencyTable.selectAll().forEach {
             if(!disabledCurrencies.contains(AddressType.valueOf(it[CurrencyTable.short].toString().toUpperCase()))){
-                order.add(it[CurrencyTable.short])
-                staticCurrencyInfos.add(StaticCurrencyInfo(it[CurrencyTable.name], it[CurrencyTable.short], it[CurrencyTable.img], it[CurrencyTable.explorerLink]))
+                val short = it[CurrencyTable.short]
+                order.add(short)
+                staticCurrencyInfos.add(StaticCurrencyInfo(it[CurrencyTable.name], short, "/logo/$short.png", it[CurrencyTable.explorerLink]))
             }
         }
     }

@@ -76,11 +76,6 @@ Name: currencies
 <td></td>
 </tr>
 <tr>
-<td>img</td>
-<td>varchar(30)</td>
-<td></td>
-</tr>
-<tr>
 <td>explorer_link</td>
 <td>text</td>
 <td></td>

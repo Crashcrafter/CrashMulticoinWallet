@@ -43,7 +43,6 @@ object CurrencyTable : Table("currencies"){
 	val id = integer("id")
 	val name = varchar("name", 30)
 	val short = varchar("short", 10)
-	val img = varchar("img", 30)
 	val explorerLink = text("explorer_link")
 }
 

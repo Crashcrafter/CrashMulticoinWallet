@@ -1,9 +1,12 @@
 package dev.einsjannis.crashwallet.server
 
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.module.kotlin.jacksonMapperBuilder
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import dev.einsjannis.crashwallet.server.json.files.ConfigObj
 import dev.einsjannis.crashwallet.server.logger.*
+import dev.einsjannis.crashwallet.server.wallet.AddressType
 import dev.einsjannis.crashwallet.server.wallet.currencies.updatePrices
 import dev.einsjannis.crashwallet.server.wallet.initAddressType
 import dev.einsjannis.crashwallet.server.wallet.initFaucets
@@ -14,6 +17,7 @@ var DCLink = ""
 var TwitterLink = "/"
 var etherscanioApiKey = ""
 var bscscanApiKey = ""
+val donationAddresses = HashMap<AddressType, String>()
 
 fun setupServer(){
 	loadConfigs()
@@ -23,6 +27,7 @@ fun setupServer(){
 	initPaths()
 	initAddressType()
 	initFaucets()
+	setupDonationAddresses()
 	mainLogger.startlogfile()
 	mainLogger.log("Loaded DB and prices!")
 }
@@ -39,4 +44,16 @@ fun loadConfigs(){
 	setMailConfig(obj.mailsmtphost, obj.mailsmtpport.toInt(), obj.mailaddress, obj.mailpassword)
 	etherscanioApiKey = obj.etherscanapitoken
 	bscscanApiKey = obj.bscscanapitoken
+}
+
+fun setupDonationAddresses(){
+	val donationFile = File("donationaddresses.json")
+	if(donationFile.exists()){
+		val jsonString = donationFile.readText()
+		val obj = jacksonObjectMapper().readTree(jsonString)
+		obj.fields().forEach {
+			val type = AddressType.valueOf(it.key.toUpperCase())
+			donationAddresses[type] = obj.get(it.key).asText()
+		}
+	}
 }

@@ -12,6 +12,7 @@ import io.ktor.routing.*
 
 fun Routing.staticPages() {
 	staticAssets()
+	staticLogos()
 	staticUIData()
 	staticJS()
 }
@@ -19,6 +20,10 @@ fun Routing.staticPages() {
 fun Routing.staticAssets() =
 	static("assets") {
 		resources("css")
+	}
+
+fun Routing.staticLogos() =
+	static("logo") {
 		resources("img/logo")
 	}
 
