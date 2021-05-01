@@ -21,7 +21,7 @@ dependencies {
 	implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
 	implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
 	implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-	implementation("mysql:mysql-connector-java:8.0.23") //GPL 2 License
+	implementation("mysql:mysql-connector-java:8.0.24") //GPL 2 License
 	implementation("org.mindrot:jbcrypt:0.4")
 	implementation("org.apache.commons:commons-email:1.5")
 	implementation("org.bouncycastle:bcprov-jdk15to18:1.68")
@@ -69,9 +69,9 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-server-netty:1.5.3")
-                implementation("io.ktor:ktor-html-builder:1.5.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+                implementation("io.ktor:ktor-server-netty:1.5.4")
+                implementation("io.ktor:ktor-html-builder:1.5.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
             }
         }
         val jvmTest by getting {
