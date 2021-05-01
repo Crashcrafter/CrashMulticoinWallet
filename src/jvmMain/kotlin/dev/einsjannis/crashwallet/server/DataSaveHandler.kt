@@ -19,7 +19,6 @@ import java.util.*
 fun initPaths(){
 	createDirIfNotExists("logs/")
 	createDirIfNotExists("logs/main/")
-	createDirIfNotExists("logs/account/")
 	createDirIfNotExists("logs/errors/")
 	createDirIfNotExists("data/")
 	createDirIfNotExists("data/addresses/")
