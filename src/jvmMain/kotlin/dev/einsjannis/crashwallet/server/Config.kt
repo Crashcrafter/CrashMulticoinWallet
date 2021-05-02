@@ -55,5 +55,7 @@ fun setupDonationAddresses(){
 			val type = AddressType.valueOf(it.key.toUpperCase())
 			donationAddresses[type] = obj.get(it.key).asText()
 		}
+	}else {
+		mainLogger.log("No donation addresses set, you can fix this issue by creating a donationaddresses.json like in the github repo.")
 	}
 }
