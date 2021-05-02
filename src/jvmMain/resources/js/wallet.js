@@ -56,7 +56,25 @@ function backtoListing(){
 	addCurrencyboxEvents()
 }
 
+let missedUpdates = 0
+document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+function handleVisibilityChange(){
+	if(missedUpdates > 0){
+		clearInterval(interval)
+		updateValues()
+		interval = window.setInterval(function(){
+			updateValues()
+		}, 30000)
+	}
+	missedUpdates = 0
+}
+
 function updateValues(){
+	if(document.hidden) {
+		missedUpdates++
+		return
+	}
 	let xhttp = new XMLHttpRequest()
 	xhttp.onreadystatechange = function (){
 		if(this.readyState === 4 && this.status === 200){
