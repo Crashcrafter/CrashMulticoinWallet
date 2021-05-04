@@ -6,7 +6,7 @@ enum class AddressType{ BTC, ETH, BNB, TRX, LTC, BCH, ZEC, DASH, DOGE, DGB, NANO
 
 val noOwnAddress = HashMap<AddressType, AddressType>()
 
-val disabledCurrencies = listOf(AddressType.TFUEL, AddressType.THETA)
+val disabledCurrencies = listOf(AddressType.TFUEL, AddressType.THETA, AddressType.NANO)
 
 fun initAddressType(){
     noOwnAddress[AddressType.TFUEL] = AddressType.THETA

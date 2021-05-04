@@ -79,7 +79,5 @@ fun Route.changePasswordRoute() = route("changepw") {
 fun Route.adminRoute() = route("admin") {
 	get { adminHome() }
 	get("users") { adminUsers() }
-	get("currencies") { adminCurrencies() }
-	post("currencies") {adminCurrenciesPost()}
 	get("wallet") { adminWallet() }
 }

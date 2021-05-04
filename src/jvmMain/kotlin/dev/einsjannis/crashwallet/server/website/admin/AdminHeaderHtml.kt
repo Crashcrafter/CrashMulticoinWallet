@@ -13,7 +13,6 @@ fun BODY.defaultAdminHeader(userid: Int) = header {
 	nav {
 		img(classes="menu", src = "ui/menu_bar.png", alt = "menu")
 		ul {
-			li { a(href = "/admin/currencies") { +"Currencies" } }
 			li { a(href = "/admin/users") {+"Users"} }
 			if(userid == 1){
 				li { a(href = "/admin/wallet") { +"Admin Wallet" } }
