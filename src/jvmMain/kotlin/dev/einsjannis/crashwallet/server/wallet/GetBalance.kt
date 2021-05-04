@@ -5,10 +5,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import dev.einsjannis.crashwallet.server.bscscanApiKey
 import dev.einsjannis.crashwallet.server.etherscanioApiKey
 import dev.einsjannis.crashwallet.server.exceptions.UnknownAddressTypeException
-import dev.einsjannis.crashwallet.server.json.BCHBalanceObj
-import dev.einsjannis.crashwallet.server.json.EtherscanBalanceResponse
-import dev.einsjannis.crashwallet.server.json.ThetaResponse
-import dev.einsjannis.crashwallet.server.json.TronscanAccountObject
+import dev.einsjannis.crashwallet.server.get
+import dev.einsjannis.crashwallet.server.json.*
 import java.net.URL
 
 fun getBalance(userid: Int, type: AddressType) : BalanceAndAddress = getBalance(getAddress(userid, type), type)
@@ -65,10 +63,9 @@ private fun getTronBalance(tronaddress: String): Double {
 	val mapper = jacksonObjectMapper()
 	return mapper.readValue<TronscanAccountObject>(response).balance.toDouble() / 100000
 }
-//TODO: Litecoin Balance
+
 private fun getLitecoinBalance(ltcaddress: String): Double {
-	//return URL("https://insight.litecore.io/api/addr/$ltcaddress/balance").readText().toDouble() / 100000000
-	return 0.0
+	return URL("https://insight.litecore.io/api/addr/$ltcaddress/balance").get().toDouble() / 100000000
 }
 
 private fun getBitcoinCashBalance(bchaddress: String): Double {
@@ -76,11 +73,11 @@ private fun getBitcoinCashBalance(bchaddress: String): Double {
 	val mapper = jacksonObjectMapper()
 	return mapper.readValue<BCHBalanceObj>(response).balance.confirmed.toDouble()
 }
-//TODO: Zcash Balance
+
 private fun getZcashBalance(zecaddress: String): Double {
-	//val response = URL("https://zecblockexplorer.com/api/v2/address/$zecaddress").readText()
-	//println(response)
-	return 0.0
+	val response = URL("https://zecblockexplorer.com/api/v2/address/$zecaddress").get()
+	val obj = jacksonObjectMapper().readTree(response)
+	return obj["balance"].asDouble() / 100000000
 }
 
 private fun getDashBalance(dashaddress: String): Double {
@@ -98,10 +95,9 @@ private fun getDigibyteBalance(dgbaddress: String): Double {
 private fun getNanoBalance(nanoaddress: String): Double {
 	return 0.0
 }
-//TODO: Reddcoin Balance
+
 private fun getReddcoinBalance(rddaddress: String): Double {
-	//return URL("https://live.reddcoin.com/api/addr/$rddaddress/balance").readText().toDouble() / 100000000
-	return 0.0
+	return URL("https://live.reddcoin.com/api/addr/$rddaddress/balance").get().toDouble() / 100000000
 }
 
 private fun getTFuelBalance(tfueladdress: String): Double {
