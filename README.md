@@ -6,10 +6,10 @@ Usage of this wallet is at your own risk, this wallet is currently really unsafe
 - You can't send crypto yet
 - You can't change any account info
 - many more, if you find an issue, please report it here or on our 
-  <a href="https://discord.gg/uzDTtM9deM">Discord</a>
+  <a href="https://discord.gg/NbW6JVvxY7">Discord</a>
 
 # Setup
 Follow the steps in the doc-folder
 
 # Contact
-Join our <a href="https://discord.gg/uzDTtM9deM">Discord</a> for more info and support.
+Join our <a href="https://discord.gg/NbW6JVvxY7">Discord</a> for more info and support.
