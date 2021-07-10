@@ -11,6 +11,7 @@ import de.crash.crashwallet.json.EtherscanBalanceResponse
 import de.crash.crashwallet.json.TronscanAccountObject
 import dev.crash.address.AddressType
 import dev.crash.bscscan.BscscanClient
+import dev.crash.dogechain.DogechainInfoSimpleQueryAPI
 import dev.crash.etherscan.EtherscanClient
 import java.net.URL
 
@@ -78,7 +79,7 @@ private fun getDashBalance(dashaddress: String): Double {
 }
 
 private fun getDogeBalance(dogeaddress: String): Double {
-	return URL("https://dogechain.info/chain/Dogecoin/q/addressbalance/$dogeaddress").get().toDouble()
+	return DogechainInfoSimpleQueryAPI.getAddressBalance(dogeaddress)
 }
 
 private fun getDigibyteBalance(dgbaddress: String): Double {
